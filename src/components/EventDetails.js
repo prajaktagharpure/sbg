@@ -3,20 +3,32 @@ import MarketList from './MarketList'
 import U from '../utils/Util'
 
 const EventDetails = ({ eventDetails, currentEventData }) => (
-  <div className='eventDetails'>
-    <div>{currentEventData.name}</div>
-    <div>{eventDetails.className}</div>
-    <div>{eventDetails.typeName}</div>
-    <div>{eventDetails.startTime}</div>
-    <div>
+  <ul className='collection with-header'>
+    <li className='collection-header'>
+      <h4>Event Details</h4>
+    </li>
+    <li className='collection-item'>{currentEventData.name}</li>
+    <li className='collection-item'>{eventDetails.className}</li>
+    <li className='collection-item'>{eventDetails.typeName}</li>
+    <li className='collection-item'>{eventDetails.startTime}</li>
+    <li className='collection-item'>
       {eventDetails.scores.home}
       {eventDetails.scores.away}
-    </div>
-    <div>{eventDetails.competitors.map(competitor => competitor.name)}</div>
-    <i>{currentEventData.loading}</i>
-    {!U.isObjEmpty(currentEventData) && currentEventData.marketData && (
-      <MarketList markets={currentEventData.marketData} />
+    </li>
+    <li className='collection-item'>
+      {eventDetails.competitors.map(competitor => competitor.name)}
+    </li>
+    {currentEventData.loading && (
+      <>
+        <i>{currentEventData.loading}</i>
+        <div className='progress indigo darken-4'>
+          <div className='indeterminate' />
+        </div>
+      </>
     )}
-  </div>
+    {!U.isObjEmpty(currentEventData) && currentEventData.marketData && (
+      <MarketList markets={currentEventData.marketData.slice(0, 9)} />
+    )}
+  </ul>
 )
 export default EventDetails

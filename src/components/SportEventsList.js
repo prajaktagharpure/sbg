@@ -1,26 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import OutcomesList from './OutcomesList'
 import { Link } from 'react-router-dom'
+import MarketList from './MarketList'
 
-const SportEventsList = ({ sportEvents, loadMarketData, eventDetails }) => (
+const SportEventsList = ({ sportEvents, loadMarketData }) => (
   <div>
-    <h1>SportEventsList</h1>
-    <ul>
+    <ul className='collection with-header'>
+      <li className='collection-header'>
+        <h4>Event List</h4>
+      </li>
       {sportEvents.map((sportEvent, index) => (
-        <li key={index} onClick={() => loadMarketData(sportEvent, index)}>
+        <li
+          className='collection-item'
+          key={'pm' + index}
+          onClick={() => loadMarketData(sportEvent, index)}>
           {sportEvent.name} -{' '}
           <Link to={'/event/' + sportEvent.eventId}>View Details</Link>
           {sportEvent.primaryMarket && (
             <>
-              <div className='primaryMarket'>
-                {sportEvent.primaryMarket.name}
-              </div>
-              {sportEvent.primaryMarket.outcomes && (
-                <OutcomesList
-                  outcomes={sportEvent.primaryMarket.outcomesData}
-                />
-              )}
+              <MarketList markets={[{ market: sportEvent.primaryMarket }]} />
             </>
           )}
         </li>

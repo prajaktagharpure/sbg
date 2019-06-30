@@ -8,7 +8,7 @@ const Price = ({ price }) => {
     setShowDecimal(!showDecimal)
   }
   return (
-    <span onClick={togglePrice}>
+    <span className='price' onClick={togglePrice}>
       {showDecimal ? price.decimal : price.num + ' / ' + price.den}
     </span>
   )

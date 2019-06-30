@@ -78,6 +78,7 @@
     "jest": "24.8.0",
     "jest-cli": "24.8.0",
     "json-loader": "0.5.7",
+    "materialize-css": "1.0.0-rc.2",
     "mini-css-extract-plugin": "0.6.0",
     "mockdate": "2.0.2",
     "node-sass": "4.12.0",
