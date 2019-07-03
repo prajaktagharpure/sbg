@@ -1,20 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
 /* Variables */
 $vin-blue: #5bb7db;
 $vin-green: #60b044;
 $vin-red: #ff0000;
+
 $header: #153f8e;
+$price: #d92231;
 
 /* Styles */
 body {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.4em;
-  color: #8a7e7e;
+  color: #111111;
   min-width: 230px;
-  max-width: 750px;
+  max-width: 100%;
   margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
   font-smoothing: antialiased;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 300;
 }
 
@@ -40,7 +45,53 @@ header {
 .collapsible-header {
   color: #ffffff;
 }
-
+.highlight {
+  span {
+    font-weight: bold;
+  }
+}
+.collection-item {
+  cursor: pointer;
+}
 .price {
   cursor: pointer;
+  color: $price;
+  font-weight: bold;
+}
+
+.main-panel {
+  width: 60%;
+}
+.left-panel {
+  width: 20%;
+}
+.loadingtext {
+  display: block;
+  margin: 10px 0 0;
+}
+
+.event-details {
+  .collection-item {
+    cursor: default;
+  }
+  strong {
+    font-weight: bold;
+  }
+}
+.outcomes-list {
+  .row {
+    margin-bottom: 0;
+  }
+}
+.mybetslipbtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.interest {
+  color: #ffebee;
+}
+.interested {
+  color: #b71c1c;
 }

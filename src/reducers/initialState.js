@@ -1,5 +1,6 @@
 export default {
   events: [],
   market: [],
-  eventFullDetails: []
+  eventFullDetails: [],
+  betSlips: []
 }

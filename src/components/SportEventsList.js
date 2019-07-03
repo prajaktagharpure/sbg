@@ -3,7 +3,12 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import MarketList from './MarketList'
 
-const SportEventsList = ({ sportEvents, loadMarketData }) => (
+const SportEventsList = ({
+  sportEvents,
+  loadMarketData,
+  handleAddBetSlip,
+  handleInterest
+}) => (
   <div>
     <ul className='collection with-header'>
       <li className='collection-header'>
@@ -12,14 +17,33 @@ const SportEventsList = ({ sportEvents, loadMarketData }) => (
       {sportEvents.map((sportEvent, index) => (
         <li
           className='collection-item'
-          key={'pm' + index}
+          key={sportEvent.eventId}
           onClick={() => loadMarketData(sportEvent, index)}>
+          {!sportEvent.isInterested && (
+            <i
+              className='material-icons left interest'
+              id={'interest-' + index}
+              onClick={e => handleInterest(e, sportEvent)}>
+              favorite
+            </i>
+          )}
+          {sportEvent.isInterested && (
+            <i
+              className='material-icons left interested'
+              id={'interested-' + index}
+              onClick={e => handleInterest(e, sportEvent)}>
+              favorite
+            </i>
+          )}
           {sportEvent.name} -{' '}
           <Link to={'/event/' + sportEvent.eventId}>View Details</Link>
-          {sportEvent.primaryMarket && (
-            <>
-              <MarketList markets={[{ market: sportEvent.primaryMarket }]} />
-            </>
+          {sportEvent.marketData && (
+            <MarketList
+              markets={[{ market: sportEvent.marketData[0] }]}
+              ukey='pm'
+              eventDetails={sportEvent}
+              handleAddBetSlip={handleAddBetSlip}
+            />
           )}
         </li>
       ))}
@@ -28,7 +52,8 @@ const SportEventsList = ({ sportEvents, loadMarketData }) => (
 )
 SportEventsList.propTypes = {
   sportEvents: PropTypes.array.isRequired,
-  loadMarketData: PropTypes.func.isRequired
+  loadMarketData: PropTypes.func.isRequired,
+  handleAddBetSlip: PropTypes.func.isRequired
 }
 
 export default SportEventsList

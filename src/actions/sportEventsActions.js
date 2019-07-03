@@ -1,7 +1,6 @@
 import S from '../services/services'
 import { subscribeToOnMessage } from './webSocketActions'
 import * as types from '../constants/actionTypes'
-import U from '../utils/Util'
 
 export function loadLiveEventsData() {
   return function(dispatch) {
@@ -61,12 +60,12 @@ export function loadEventFullDetails(eventId) {
   }
 }
 
-export function getEventById(sportEvents, eventId) {
-  if (eventId && sportEvents && sportEvents.length) {
-    const filteredEvt = sportEvents.filter(
-      sportEvent => parseInt(sportEvent.eventId) === parseInt(eventId)
-    )[0]
-    return filteredEvt && !U.isObjEmpty(filteredEvt) ? filteredEvt : {}
+export function toggleEventInterest(evt) {
+  return function(dispatch) {
+    S.WebSocketService.subscribeToData(['e.' + evt.eventId])
+    dispatch({
+      type: types.TOGGLE_EVENT_INTEREST_SUCCESS,
+      evt
+    })
   }
-  return {}
 }

@@ -1,5 +1,6 @@
 import S from '../services/services'
 import * as types from '../constants/actionTypes'
+import { loadLiveUpdates } from './sportEventsActions'
 
 export function subscribeToOnMessage() {
   return new Promise(resolve => {

@@ -12,7 +12,7 @@ import S from './services/services'
 require('./favicon.ico') // Tell webpack to load favicon.ico
 
 const store = configureStore()
-S.WebSocketService.initWebSocket()
+S.WebSocketService.initWebSocket(store)
 
 render(
   <AppContainer>

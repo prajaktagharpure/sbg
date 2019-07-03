@@ -6,8 +6,10 @@ import {
   loadLiveEventsData,
   loadPrimaryMarketData,
   loadEventFullDetails,
-  getEventById
+  toggleEventInterest
 } from '../../actions/sportEventsActions'
+import { addBetSlip } from '../../actions/betSlipsActions'
+import { getEventById } from '../../actions/helperActions'
 import { bindActionCreators } from 'redux'
 import EventDetails from '../EventDetails'
 import U from '../../utils/Util'
@@ -16,8 +18,7 @@ export function SportEventsPage({
   sportEvents,
   actions,
   eventDetails,
-  eventFullDetails,
-  ...props
+  eventFullDetails
 }) {
   const [currentEventData, setCurrentEventData] = useState({})
   useEffect(() => {
@@ -39,6 +40,11 @@ export function SportEventsPage({
     }
   }, [eventDetails, eventFullDetails])
 
+  function handleInterest(e, evt) {
+    e.stopPropagation()
+    actions.toggleEventInterest(evt)
+  }
+
   function handleLoadPrimaryMarket(sportEvent, index) {
     if (!sportEvent.primaryMarket) {
       const primaryMarketId = sportEvent.markets[0]
@@ -46,12 +52,25 @@ export function SportEventsPage({
     }
   }
 
-  function LoadListOrDetails({ eventDetails, eventFullDetails }) {
+  function handleAddBetSlip(outcome, currMkt, currEvt) {
+    let betSlipData = {
+      name: currMkt.name + ' - ' + outcome.name,
+      outcome,
+      marketName: currMkt.name,
+      eventName: currEvt.name
+    }
+
+    actions.addBetSlip(betSlipData)
+  }
+
+  function LoadListOrDetails() {
     if (U.isObjEmpty(eventDetails)) {
       return (
         <SportEventsList
           sportEvents={sportEvents}
           loadMarketData={handleLoadPrimaryMarket}
+          handleAddBetSlip={handleAddBetSlip}
+          handleInterest={handleInterest}
         />
       )
     }
@@ -59,28 +78,25 @@ export function SportEventsPage({
       <EventDetails
         eventDetails={eventDetails}
         currentEventData={currentEventData}
+        handleAddBetSlip={handleAddBetSlip}
       />
     )
   }
-  return (
-    <LoadListOrDetails
-      eventDetails={eventDetails}
-      eventFullDetails={eventFullDetails}
-    />
-  )
+  return <LoadListOrDetails />
 }
 
 SportEventsPage.propTypes = {
   sportEvents: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
-  sportEvent: PropTypes.object
+  eventDetails: PropTypes.object,
+  eventFullDetails: PropTypes.array.isRequired
 }
 
 function mapStateToProps(state, ownProps) {
   const eventId = ownProps.history.location.pathname.split('/')[2]
 
   return {
-    eventDetails: getEventById(state.sportEvents, eventId),
+    eventDetails: getEventById([...state.sportEvents], eventId),
     sportEvents: [...state.sportEvents],
     eventFullDetails: [...state.eventFullDetails]
   }
@@ -94,7 +110,9 @@ function mapDispatchToProps(dispatch) {
         loadPrimaryMarketData,
         dispatch
       ),
-      loadEventFullDetails: bindActionCreators(loadEventFullDetails, dispatch)
+      loadEventFullDetails: bindActionCreators(loadEventFullDetails, dispatch),
+      addBetSlip: bindActionCreators(addBetSlip, dispatch),
+      toggleEventInterest: bindActionCreators(toggleEventInterest, dispatch)
     }
   }
 }

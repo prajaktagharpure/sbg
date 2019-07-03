@@ -20,9 +20,11 @@ export default {
       try {
         return await response.json()
       } catch (parseJSONError) {
+        //eslint-disable-next-line
         console.error(`parseJSON failed: ${parseJSONError}`)
       }
     } catch (error) {
+      //eslint-disable-next-line
       console.error(`Fetch data failed: ${error}`)
     }
   },
@@ -31,8 +33,8 @@ export default {
   },
   WebSocketService: {
     _ws: null,
-    websocketUrl: 'ws://192.168.99.100:8889/',
-    initWebSocket() {
+    websocketUrl: C.WEBSOCKET_URL,
+    initWebSocket(store) {
       this._ws = new Promise((resolve, reject) => {
         const w = new WebSocket(this.websocketUrl)
         w.onopen = () => {
@@ -47,6 +49,18 @@ export default {
       this._ws.then(server => {
         server.send(JSON.stringify({ type, ...data }))
       })
+    },
+    subscribeToData(keys, clearSubscription = false) {
+      this._ws.then(server =>
+        server.send(
+          JSON.stringify({ type: 'subscribe', keys: keys, clearSubscription })
+        )
+      )
+    },
+    unsubscribeToData(keys) {
+      this._ws.then(server =>
+        server.send(JSON.stringify({ type: 'unsubscribe', keys: keys }))
+      )
     }
   }
 }

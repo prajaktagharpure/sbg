@@ -8,7 +8,7 @@ const AboutPage = () => {
       <h1 className='alt-header'>About Sky Betting and Gaming App</h1>
       <p>
         This app exclusively displays Football events showing various markets
-        associated.
+        and outcomes associated.
       </p>
     </div>
   )
