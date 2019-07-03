@@ -30,20 +30,22 @@ const OutcomesList = ({
                 {!outcome.outcome.status.suspended && (
                   <>
                     <Price price={outcome.outcome.price} />{' '}
-                    <button
+                    <a
+                      href='javascript:;'
                       className='mybetslipbtn right'
-                      onClick={() => {
+                      onClick={e => {
                         handleAddBetSlip(
                           outcome.outcome,
                           marketDetails,
-                          eventDetails
+                          eventDetails,
+                          e
                         )
                       }}>
                       <img
                         alt='My Bet Slip'
                         src='../img/arrow-right-circle1.png'
                       />
-                    </button>
+                    </a>
                   </>
                 )}
                 {outcome.outcome.status.suspended && <div>Susp</div>}

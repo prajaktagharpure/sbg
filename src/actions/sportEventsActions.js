@@ -1,20 +1,22 @@
 import S from '../services/services'
-import { subscribeToOnMessage } from './webSocketActions'
 import * as types from '../constants/actionTypes'
+import { send } from '@giantmachines/redux-websocket'
 
 export function loadLiveEventsData() {
   return function(dispatch) {
-    //Setting the listener
-    subscribeToOnMessage().then(data => {
-      dispatch(data)
-    })
-    S.WebSocketService.getData('getLiveEvents', { primaryMarkets: true })
+    dispatch(send({ type: 'getLiveEvents', primaryMarkets: true }))
   }
 }
 
 export function loadPrimaryMarketData(marketId, index) {
   return function(dispatch) {
-    subscribeToOnMessage().then(evtData => {
+    S.fetchData(S.getMarketUrl() + marketId).then(market => {
+      let evtData = {
+        type: types.LOAD_PRIMARY_MARKET_DATA_SUCCESS,
+        data: {
+          market: market.market
+        }
+      }
       evtData.data.index = index
       promiseAll(evtData.data.market.outcomes, S.getOutcomeUrl()).then(
         outcomes => {
@@ -24,7 +26,6 @@ export function loadPrimaryMarketData(marketId, index) {
         }
       )
     })
-    S.WebSocketService.getData('getMarket', { id: marketId })
   }
 }
 
@@ -62,10 +63,16 @@ export function loadEventFullDetails(eventId) {
 
 export function toggleEventInterest(evt) {
   return function(dispatch) {
-    S.WebSocketService.subscribeToData(['e.' + evt.eventId])
     dispatch({
       type: types.TOGGLE_EVENT_INTEREST_SUCCESS,
       evt
     })
+    dispatch(
+      send({
+        type: evt.isInterested ? 'unsubscribe' : 'subscribe',
+        keys: ['e.' + evt.eventId],
+        clearSubscription: false
+      })
+    )
   }
 }

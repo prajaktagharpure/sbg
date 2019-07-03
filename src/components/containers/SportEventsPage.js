@@ -52,7 +52,8 @@ export function SportEventsPage({
     }
   }
 
-  function handleAddBetSlip(outcome, currMkt, currEvt) {
+  function handleAddBetSlip(outcome, currMkt, currEvt, e) {
+    e.stopPropagation()
     let betSlipData = {
       name: currMkt.name + ' - ' + outcome.name,
       outcome,

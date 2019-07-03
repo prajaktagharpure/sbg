@@ -1,19 +1,64 @@
 import initialState from './initialState'
 import * as types from '../constants/actionTypes'
 import {
+  getEventById,
+  getMarketById,
+  getOutcomeById,
   filterOutNonDisplayable,
   filterEventFullDetails
 } from '../actions/helperActions'
+import U from '../utils/Util'
 
 export default function sportEventsReducer(
   state = initialState.events,
   action
 ) {
   switch (action.type) {
-    case types.LOAD_LIVE_EVENTS_DATA_SUCCESS: {
-      let filteredSportEvents = filterOutNonDisplayable(action.sportEvents) //Not keeping unfilteredData for the purposes of this app
-      return [...state, ...filteredSportEvents]
+    case 'REDUX_WEBSOCKET::MESSAGE': {
+      const { type, data } = JSON.parse(action.payload.message)
+      if (type && type === types.LIVE_EVENTS_DATA) {
+        let filteredSportEvents = filterOutNonDisplayable(data) //Not keeping unfilteredData for the purposes of this app
+        return [...state, ...filteredSportEvents]
+      } else {
+        if (
+          (type && type === types.PRICE_CHANGE) ||
+          (type && type === types.OUTCOME_STATUS) ||
+          (type && type === types.MARKET_DATA)
+        ) {
+          let { marketId, eventId, outcomeId, price, status } = data
+          let newState = []
+          newState = [...state]
+          let currEvent = getEventById(newState, eventId)
+          if (!U.isObjEmpty(currEvent) && currEvent.marketData) {
+            let marketData = currEvent.marketData
+            let changedMarket = getMarketById(marketData, marketId)
+            if (!U.isObjEmpty(changedMarket) && type === types.MARKET_DATA) {
+              changedMarket = Object.assign({}, changedMarket, status)
+            }
+
+            if (type === types.PRICE_CHANGE || type === types.OUTCOME_STATUS) {
+              let currMarket = currEvent.marketData.filter(
+                market => market.marketId === marketId
+              )[0]
+              if (currMarket && !U.isObjEmpty(currMarket)) {
+                let changedOutcome = getOutcomeById(
+                  currMarket.outcomesData,
+                  outcomeId
+                )
+                if (!U.isObjEmpty(changedOutcome)) {
+                  changedOutcome = Object.assign({}, changedOutcome, {
+                    price,
+                    status
+                  })
+                }
+              }
+            }
+          }
+        }
+      }
+      return state
     }
+
     case types.LOAD_PRIMARY_MARKET_DATA_SUCCESS: {
       const newState = state.slice()
 
@@ -32,7 +77,6 @@ export default function sportEventsReducer(
       newState = [...state]
       return newState.map(evt => {
         if (evt.eventId === evtId) {
-          //evt.isInterested = evt.isInterested ? !evt.isInterested : true
           if (evt.isInterested) evt = { ...evt, ...{ isInterested: false } }
           else evt = { ...evt, ...{ isInterested: true } }
         }

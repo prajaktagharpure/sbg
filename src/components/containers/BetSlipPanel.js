@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import BetSlips from '../BetSlips'
@@ -7,7 +7,6 @@ import { bindActionCreators } from 'redux'
 
 export function BetSlipPanel({ betSlips, actions }) {
   function handleRemove(e) {
-    debugger
     const index = parseInt(e.target.id.split('-')[1])
     actions.removeBetSlip(index)
   }

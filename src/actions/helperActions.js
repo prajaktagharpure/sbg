@@ -30,3 +30,26 @@ export function getEventById(sportEvents, eventId) {
   }
   return {}
 }
+
+export function getMarketById(markets, id, key) {
+  if (id && markets && markets.length) {
+    const filteredMarket = markets.filter(
+      market =>
+        parseInt(key ? market[key].marketId : market.marketId) === parseInt(id)
+    )[0]
+    return filteredMarket && !U.isObjEmpty(filteredMarket) ? filteredMarket : {}
+  }
+  return {}
+}
+
+export function getOutcomeById(outcomes, id) {
+  if (id && outcomes && outcomes.length) {
+    const filteredOutcome = outcomes.filter(
+      outcome => parseInt(outcome.outcome.outcomeId) === parseInt(id)
+    )[0]
+    return filteredOutcome && !U.isObjEmpty(filteredOutcome)
+      ? filteredOutcome
+      : {}
+  }
+  return {}
+}

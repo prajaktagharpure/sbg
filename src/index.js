@@ -8,11 +8,12 @@ import Root from './components/Root'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min.js'
 import './styles/styles.scss'
-import S from './services/services'
+import { connect } from '@giantmachines/redux-websocket'
+import { WEBSOCKET_URL } from './config/service_config.json'
 require('./favicon.ico') // Tell webpack to load favicon.ico
 
 const store = configureStore()
-S.WebSocketService.initWebSocket(store)
+store.dispatch(connect(WEBSOCKET_URL))
 
 render(
   <AppContainer>

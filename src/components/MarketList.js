@@ -42,7 +42,8 @@ const MarketList = ({ markets, ukey, handleAddBetSlip, eventDetails }) => {
 MarketList.propTypes = {
   markets: PropTypes.array.isRequired,
   ukey: PropTypes.string.isRequired,
-  handleAddBetSlip: PropTypes.func.isRequired
+  handleAddBetSlip: PropTypes.func.isRequired,
+  eventDetails: PropTypes.object.isRequired
 }
 
 export default MarketList

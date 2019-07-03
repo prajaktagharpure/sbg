@@ -1,19 +1,18 @@
 import '@babel/polyfill'
-import C from '../constants/Constants'
-
+import { SERVICE_URL } from '../config/service_config.json'
 export default {
   getOutcomeUrl: id =>
     id
-      ? C.SERVICE_URL + 'sportsbook/outcome/' + id
-      : C.SERVICE_URL + 'sportsbook/outcome/',
+      ? SERVICE_URL + 'sportsbook/outcome/' + id
+      : SERVICE_URL + 'sportsbook/outcome/',
   getEventUrl: id =>
     id
-      ? C.SERVICE_URL + 'sportsbook/event/' + id
-      : C.SERVICE_URL + 'sportsbook/event/',
+      ? SERVICE_URL + 'sportsbook/event/' + id
+      : SERVICE_URL + 'sportsbook/event/',
   getMarketUrl: id =>
     id
-      ? C.SERVICE_URL + 'sportsbook/market/' + id
-      : C.SERVICE_URL + 'sportsbook/market/',
+      ? SERVICE_URL + 'sportsbook/market/' + id
+      : SERVICE_URL + 'sportsbook/market/',
   fetchData: async (serviceUrl, data) => {
     try {
       const response = await fetch(serviceUrl, data || null)
@@ -30,37 +29,5 @@ export default {
   },
   postData: async (serviceUrl, settings) => {
     return this.fetchData(serviceUrl, settings)
-  },
-  WebSocketService: {
-    _ws: null,
-    websocketUrl: C.WEBSOCKET_URL,
-    initWebSocket(store) {
-      this._ws = new Promise((resolve, reject) => {
-        const w = new WebSocket(this.websocketUrl)
-        w.onopen = () => {
-          resolve(w)
-        }
-        w.onerror = () => {
-          reject(w)
-        }
-      })
-    },
-    getData(type, data) {
-      this._ws.then(server => {
-        server.send(JSON.stringify({ type, ...data }))
-      })
-    },
-    subscribeToData(keys, clearSubscription = false) {
-      this._ws.then(server =>
-        server.send(
-          JSON.stringify({ type: 'subscribe', keys: keys, clearSubscription })
-        )
-      )
-    },
-    unsubscribeToData(keys) {
-      this._ws.then(server =>
-        server.send(JSON.stringify({ type: 'unsubscribe', keys: keys }))
-      )
-    }
   }
 }

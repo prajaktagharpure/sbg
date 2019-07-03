@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import U from '../utils/Util'
 
@@ -33,7 +32,8 @@ const BetSlips = function BetSlips({ betSlips, handleRemove }) {
 }
 
 BetSlips.propTypes = {
-  betSlips: PropTypes.array.isRequired
+  betSlips: PropTypes.array.isRequired,
+  handleRemove: PropTypes.func.isRequired
 }
 
 export default BetSlips

@@ -4,7 +4,7 @@ App is built using the React Slingshot boilerplate https://github.com/coryhouse/
 
 It consumes the Sky Docker API and Websocket to get the desired results
 
-\*\* Please replace the host to the API in the src/constants/Constants.js => SERVICE_URL to the IP of your machine docker is running
+\*\* Please replace the host to the SERVICE_URL & WEBSOCKET_URL in the config/service_config.json to the IP of your machine docker is running
 
 \*\* Simply run the command `npm run start` which should run the app, run eslinter and unit tests
 
