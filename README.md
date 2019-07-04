@@ -8,7 +8,7 @@ It consumes the Sky Docker API and Websocket
 
 - Simply run the command `npm run start` or `npm start` which should run the app, run eslinter and unit tests
 
-## Tech Stalk
+## Tech Stalk (MY choice)
 
 - React
 - Redux
@@ -28,3 +28,9 @@ It consumes the Sky Docker API and Websocket
 - Live updates are subscribed to events are showing changes related to outcome status and outcome price
 - Ability to add an outcome to the my betslip panel (just basic data flow shown)
 - Some very simple unit tests
+
+--(Some of the features in the three tech test task not completed as a part of this app due to some time constraints on my end. Features implemented above have been selected randomly)
+
+## TODOS
+
+- At times, JS renders before the CSS for split second (Webpack config error maybe? )
