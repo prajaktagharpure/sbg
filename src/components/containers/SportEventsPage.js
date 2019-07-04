@@ -21,9 +21,14 @@ export function SportEventsPage({
   eventFullDetails
 }) {
   const [currentEventData, setCurrentEventData] = useState({})
+  const [isInterested, setIsInterested] = useState(false)
   useEffect(() => {
     if (sportEvents.length === 0) {
       actions.loadLiveEventsData()
+    } else {
+      let isAnyBodyInterested = sportEvents.filter(ievt => ievt.isInterested)
+      if (isAnyBodyInterested.length > 0) setIsInterested(true)
+      else setIsInterested(false)
     }
     if (!U.isObjEmpty(eventDetails)) {
       let currEvent = getEventById(eventFullDetails, eventDetails.eventId)
@@ -72,6 +77,7 @@ export function SportEventsPage({
           loadMarketData={handleLoadPrimaryMarket}
           handleAddBetSlip={handleAddBetSlip}
           handleInterest={handleInterest}
+          isInterested={isInterested}
         />
       )
     }
@@ -80,6 +86,7 @@ export function SportEventsPage({
         eventDetails={eventDetails}
         currentEventData={currentEventData}
         handleAddBetSlip={handleAddBetSlip}
+        isInterested={isInterested}
       />
     )
   }

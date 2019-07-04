@@ -3,7 +3,12 @@ import MarketList from './MarketList'
 import PropTypes from 'prop-types'
 import U from '../utils/Util'
 
-const EventDetails = ({ eventDetails, currentEventData, handleAddBetSlip }) => (
+const EventDetails = ({
+  eventDetails,
+  currentEventData,
+  handleAddBetSlip,
+  isInterested
+}) => (
   <ul className='collection with-header event-details'>
     <li className='collection-header'>
       <h4>Event Details</h4>
@@ -46,6 +51,7 @@ const EventDetails = ({ eventDetails, currentEventData, handleAddBetSlip }) => (
         markets={currentEventData.marketData.slice(0, 19)}
         eventDetails={eventDetails}
         handleAddBetSlip={handleAddBetSlip}
+        isInterested={isInterested}
       />
     )}
   </ul>

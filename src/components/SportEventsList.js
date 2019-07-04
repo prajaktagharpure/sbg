@@ -7,7 +7,8 @@ const SportEventsList = ({
   sportEvents,
   loadMarketData,
   handleAddBetSlip,
-  handleInterest
+  handleInterest,
+  isInterested
 }) => (
   <div>
     <ul className='collection with-header'>
@@ -43,6 +44,7 @@ const SportEventsList = ({
               ukey='pm'
               eventDetails={sportEvent}
               handleAddBetSlip={handleAddBetSlip}
+              isInterested={isInterested}
             />
           )}
         </li>

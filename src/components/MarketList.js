@@ -2,7 +2,13 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import OutcomesList from './OutcomesList'
 
-const MarketList = ({ markets, ukey, handleAddBetSlip, eventDetails }) => {
+const MarketList = ({
+  markets,
+  ukey,
+  handleAddBetSlip,
+  eventDetails,
+  isInterested
+}) => {
   useEffect(() => {
     //Accordion init code from materialise css
     var elems = document.querySelectorAll('.collapsible')
@@ -13,24 +19,21 @@ const MarketList = ({ markets, ukey, handleAddBetSlip, eventDetails }) => {
     e.stopPropagation()
   }
   return (
-    <ul className={eventDetails.isInterested ? 'market-block' : 'collapsible'}>
+    <ul className={isInterested ? 'market-block' : 'collapsible'}>
       {markets.map(market => (
         <li
           key={ukey + '-' + market.market.marketId}
           id={ukey + '-' + market.market.marketId}>
           <div
             className={
-              eventDetails.isInterested
+              isInterested
                 ? 'market-header indigo darken-4'
                 : 'collapsible-header indigo darken-4'
             }
             onClick={handleChange}>
             {market.market.name}
           </div>
-          <div
-            className={
-              eventDetails.isInterested ? 'market-body' : 'collapsible-body'
-            }>
+          <div className={isInterested ? 'market-body' : 'collapsible-body'}>
             {market.market.outcomesData && (
               <OutcomesList
                 handleAddBetSlip={handleAddBetSlip}
