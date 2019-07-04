@@ -13,17 +13,24 @@ const MarketList = ({ markets, ukey, handleAddBetSlip, eventDetails }) => {
     e.stopPropagation()
   }
   return (
-    <ul className='collapsible'>
+    <ul className={eventDetails.isInterested ? 'market-block' : 'collapsible'}>
       {markets.map(market => (
         <li
           key={ukey + '-' + market.market.marketId}
           id={ukey + '-' + market.market.marketId}>
           <div
-            className='collapsible-header indigo darken-4'
+            className={
+              eventDetails.isInterested
+                ? 'market-header indigo darken-4'
+                : 'collapsible-header indigo darken-4'
+            }
             onClick={handleChange}>
             {market.market.name}
           </div>
-          <div className='collapsible-body'>
+          <div
+            className={
+              eventDetails.isInterested ? 'market-body' : 'collapsible-body'
+            }>
             {market.market.outcomesData && (
               <OutcomesList
                 handleAddBetSlip={handleAddBetSlip}

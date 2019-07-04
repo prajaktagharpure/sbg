@@ -43,7 +43,7 @@ const EventDetails = ({ eventDetails, currentEventData, handleAddBetSlip }) => (
     {!U.isObjEmpty(currentEventData) && currentEventData.marketData && (
       <MarketList
         ukey='ed'
-        markets={currentEventData.marketData.slice(0, 14)}
+        markets={currentEventData.marketData.slice(0, 19)}
         eventDetails={eventDetails}
         handleAddBetSlip={handleAddBetSlip}
       />

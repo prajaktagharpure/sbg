@@ -1,9 +1,6 @@
 import initialState from './initialState'
 import * as types from '../constants/actionTypes'
 import {
-  getEventById,
-  getMarketById,
-  getOutcomeById,
   filterOutNonDisplayable,
   filterEventFullDetails
 } from '../actions/helperActions'
@@ -22,38 +19,45 @@ export default function sportEventsReducer(
       } else {
         if (
           (type && type === types.PRICE_CHANGE) ||
-          (type && type === types.OUTCOME_STATUS) ||
-          (type && type === types.MARKET_DATA)
+          (type && type === types.OUTCOME_STATUS)
         ) {
           let { marketId, eventId, outcomeId, price, status } = data
           let newState = []
           newState = [...state]
-          let currEvent = getEventById(newState, eventId)
-          if (!U.isObjEmpty(currEvent) && currEvent.marketData) {
-            let marketData = currEvent.marketData
-            let changedMarket = getMarketById(marketData, marketId)
-            if (!U.isObjEmpty(changedMarket) && type === types.MARKET_DATA) {
-              changedMarket = Object.assign({}, changedMarket, status)
-            }
+          let newEvt = newState.filter(evt => evt.eventId === eventId)[0]
 
-            if (type === types.PRICE_CHANGE || type === types.OUTCOME_STATUS) {
-              let currMarket = currEvent.marketData.filter(
-                market => market.marketId === marketId
-              )[0]
-              if (currMarket && !U.isObjEmpty(currMarket)) {
-                let changedOutcome = getOutcomeById(
-                  currMarket.outcomesData,
-                  outcomeId
-                )
-                if (!U.isObjEmpty(changedOutcome)) {
-                  changedOutcome = Object.assign({}, changedOutcome, {
-                    price,
-                    status
+          newEvt = newEvt && JSON.parse(JSON.stringify(newEvt))
+          let marketData = []
+          if (newEvt && !U.isArrayEmpty(newEvt.marketData)) {
+            marketData = newEvt.marketData.map(market => {
+              if (market.marketId === marketId) {
+                if (market.outcomesData) {
+                  market.outcomesData = market.outcomesData.map(outcome => {
+                    if (outcome.outcome.outcomeId === outcomeId) {
+                      outcome.outcome = Object.assign({}, outcome.outcome, {
+                        price,
+                        status
+                      })
+                    }
+                    return outcome
                   })
                 }
               }
-            }
+              return market
+            })
           }
+
+          if (!U.isArrayEmpty(marketData))
+            newEvt = Object.assign({}, newEvt, { marketData })
+
+          newState = newState.map(evt => {
+            if (evt.eventId === newEvt.eventId) {
+              return Object.assign({}, evt, newEvt)
+            }
+            return evt
+          })
+
+          return newState
         }
       }
       return state
