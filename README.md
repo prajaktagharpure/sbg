@@ -22,6 +22,7 @@ It consumes the Sky Docker API and Websocket
 
 - Implementation of WebSocket through react redux middleware support
 - Displaying the events on the overview page showing only the primary market
+- Toggle price to view decimal and fraction odds
 - On click of View Details, nagivates to the Details page showing more markets and outcomes (currently displaying first 20)
 - Ability to select your favourite event by clicking on heart symbol which gives live updates about the event
 - For the favourite events or events of interest since live updates are triggered, UI layout changes from accordion/collapsible to normal display or markets and outcomes. Done so that live updates in OUTCOME PRICE and STATUS could be seen
