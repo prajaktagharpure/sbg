@@ -53,7 +53,8 @@ MarketList.propTypes = {
   markets: PropTypes.array.isRequired,
   ukey: PropTypes.string.isRequired,
   handleAddBetSlip: PropTypes.func.isRequired,
-  eventDetails: PropTypes.object.isRequired
+  eventDetails: PropTypes.object.isRequired,
+  isInterested: PropTypes.bool.isRequired
 }
 
 export default MarketList

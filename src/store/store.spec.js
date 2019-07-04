@@ -3,10 +3,7 @@
 import MockDate from 'mockdate'
 import configureStore from './configureStore'
 
-import { getFormattedDateTime } from '../utils/dates'
-
 describe('Store', () => {
-  let dateModified
   beforeAll(() => {
     // hardcoded date for consistency in tests and snapshots on all machines
     MockDate.set(new Date('07/07 18:35:01'))

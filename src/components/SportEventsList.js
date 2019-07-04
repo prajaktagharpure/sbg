@@ -56,7 +56,8 @@ SportEventsList.propTypes = {
   sportEvents: PropTypes.array.isRequired,
   loadMarketData: PropTypes.func.isRequired,
   handleAddBetSlip: PropTypes.func.isRequired,
-  handleInterest: PropTypes.func.isRequired
+  handleInterest: PropTypes.func.isRequired,
+  isInterested: PropTypes.bool
 }
 
 export default SportEventsList

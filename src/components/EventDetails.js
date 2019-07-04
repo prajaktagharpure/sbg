@@ -59,6 +59,7 @@ const EventDetails = ({
 EventDetails.propTypes = {
   currentEventData: PropTypes.object.isRequired,
   eventDetails: PropTypes.object.isRequired,
-  handleAddBetSlip: PropTypes.func
+  handleAddBetSlip: PropTypes.func,
+  isInterested: PropTypes.bool
 }
 export default EventDetails
