@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SportEventsPage /> should match snapshot 1`] = `
+<ul
+  className="collection with-header event-details"
+>
+  <li
+    className="collection-header"
+  >
+    <h4>
+      Event Details
+    </h4>
+  </li>
+  <li
+    className="collection-item"
+  >
+    <strong>
+      Event Name 
+    </strong>
+    Shanghai Shenhua 0 v 0 Shandong Luneng Taishan
+  </li>
+  <li
+    className="collection-item"
+  >
+    <strong>
+      Class Name 
+    </strong>
+    Football
+  </li>
+  <li
+    className="collection-item"
+  >
+    <strong>
+      Type Name
+    </strong>
+     
+    Football Live
+  </li>
+  <li
+    className="collection-item"
+  >
+    <strong>
+      StartTime 
+    </strong>
+    2017-09-19T11:35:23.000Z
+  </li>
+  <li
+    className="collection-item"
+  >
+    <strong>
+       Home 
+    </strong>
+     
+    0
+     
+    <br />
+    <strong>
+       Away 
+    </strong>
+    0
+  </li>
+  <li
+    className="collection-item"
+  >
+    <strong>
+      Competitors Home
+    </strong>
+     
+    0
+     
+    <br />
+    Shanghai Shenhua
+    Shandong Luneng Taishan
+  </li>
+</ul>
+`;

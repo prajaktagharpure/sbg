@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<BetSlipPanel /> should match snapshot 1`] = `
+<ul
+  className="collection with-header"
+>
+  <li
+    className="collection-header"
+  >
+    <h4>
+      My BetSlip
+    </h4>
+  </li>
+  <li
+    className="collection-item"
+  >
+    Half-Time/Full-Time - Kuching FA/Kuching FA
+    <i
+      className="material-icons right"
+      id="bs-0"
+      onClick={[Function]}
+    >
+      clear
+    </i>
+  </li>
+</ul>
+`;
